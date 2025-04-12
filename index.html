@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lipa na Tengeneza M-Kadi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0fff3;
+      padding: 20px;
+    }
+    form {
+      background: white;
+      max-width: 500px;
+      margin: auto;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background: green;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">Tengeneza M-Kadi ya Tukio Lako</h2>
+
+<form id="inviteForm">
+  <input type="text" id="fullName" placeholder="Jina Kamili" required>
+  <select id="eventType" required>
+    <option value="">-- Chagua Tukio --</option>
+    <option value="Harusi">Harusi</option>
+    <option value="Sendoff">Sendoff</option>
+    <option value="Birthday">Birthday</option>
+  </select>
+  <input type="date" id="eventDate" required>
+  <input type="time" id="eventTime" required>
+  <input type="text" id="location" placeholder="Mahali" required>
+  <input type="tel" id="phone" placeholder="Namba ya Simu" required>
+  <input type="email" id="email" placeholder="Email (optional)">
+  <button type="button" onclick="makePayment()">Lipa TZS 5,000</button>
+</form>
+
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<script>
+  function makePayment() {
+    const fullName = document.getElementById('fullName').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const eventType = document.getElementById('eventType').value;
+    const eventDate = document.getElementById('eventDate').value;
+    const eventTime = document.getElementById('eventTime').value;
+    const location = document.getElementById('location').value;
+
+    FlutterwaveCheckout({
+      public_key: "#PSENT00614104", // badilisha hii
+      tx_ref: "mkadi-" + Date.now(),
+      amount: 5000,
+      currency: "TZS",
+      payment_options: "card,mpesa,tigopesa,airtelmoney",
+      customer: {
+        email: email || "noemail@mkadi.com",
+        phone_number: phone,
+        name: fullName,
+      },
+      callback: function (data) {
+        // redirect to card with details after payment
+        const query = new URLSearchParams({
+          name: fullName,

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M-Kadi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f0fff3;
+      color: #333;
+      padding: 20px;
+    }
+    .card-app {
+      max-width: 450px;
+      margin: auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    header {
+      background: green;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+    header h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5em;
+    }
+    .details {
+      padding: 20px;
+    }
+    .info {
+      margin-bottom: 15px;
+    }
+    iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+      border-radius: 10px;
+    }
+    .btns {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px;
+    }
+    .btns a {
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      color: white;
+      background: green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card-app">
+  <header>
+    <h1 id="eventTitle">Tukio</h1>
+    <p>Karibu kwenye tukio letu maalum</p>
+  </header>
+
+  <div class="details">
+    <div class="info"><strong>Tarehe:</strong> <span id="eventDate"></span></div>
+    <div class="info"><strong>Muda:</strong> <span id="eventTime"></span></div>
+    <div class="info"><strong>Mahali:</strong> <span id="eventPlace"></span></div>
+
+    <h3>Ramani:</h3>
+    <iframe id="mapFrame" src=""></iframe>
+
+    <div class="btns">
+      <a href="#" id="callBtn">Piga Simu</a>
+      <a href="#" id="whatsappBtn">WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Toa data kutoka URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const name = urlParams.get("name");
+  const event = urlParams.get("event");
+  const date = urlParams.get("date");
+  const time = urlParams.get("time");
+  const place = urlParams.get("place");
+  const phone = urlParams.get("phone");
+
+  // Jaza kwenye m-kadi
+  document.getElementById("eventTitle").textContent = name + " - " + event;
+  document.getElementById("eventDate").textContent = date;
+  document.getElementById("eventTime").textContent = time;
+  document.getElementById("eventPlace").textContent = place;
+  document.getElementById("callBtn").href = "tel:" + phone;
+  document.getElementById("whatsappBtn").href = "https://wa.me/255" + phone.slice(-9);
+
+  // Geuza location kuwa link ya ramani
+  const mapFrame = document.getElementById("mapFrame");
+  const mapQuery
